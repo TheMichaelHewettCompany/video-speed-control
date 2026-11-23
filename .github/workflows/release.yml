@@ -6,7 +6,8 @@ on:
 jobs:
   release:
     name: Release
-    runs-on: ubuntu-latest
+    # The repo variable `CI_RUNNER` picks the runner, and blank means `ubuntu-latest`.
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-latest' }}
     permissions:
       contents: write
 
