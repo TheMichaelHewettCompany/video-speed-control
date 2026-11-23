@@ -9,7 +9,10 @@ on:
 jobs:
   ci:
     name: Type-check, lint, and build
-    runs-on: ubuntu-latest
+    # The repo variable `CI_RUNNER` holds `gh-agent-runner`, the org's self-hosted runner, and blank
+    # means `ubuntu-latest`. This repo is public, so a pull request from a fork stays on
+    # `ubuntu-latest` and never runs its code on the self-hosted box.
+    runs-on: ${{ (github.event.pull_request.head.repo.fork && 'ubuntu-latest') || vars.CI_RUNNER || 'ubuntu-latest' }}
 
     steps:
       - uses: actions/checkout@v4
